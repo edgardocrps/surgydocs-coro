@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SurgyDocs C · Cirugía General</title>
+  <meta name="description" content="SurgyDocs C: historias clínicas, notas operatorias, evoluciones, egresos y formatos de Cirugía General. Los datos quedan solo en este equipo.">
+  <meta name="theme-color" content="#15233B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SurgyDocs C">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="iconos/favicon.png">
+  <link rel="apple-touch-icon" href="iconos/icono-180.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <!-- 7.1: bienvenida (nombre, reseña y autor) mientras carga la app -->
+  <div class="arranque" id="arranque">
+    <div class="arranque-centro">
+      <div class="logo grande"><img src="iconos/logo.svg" alt=""></div>
+      <div class="arranque-t">SurgyDocs C</div>
+      <div class="arranque-sub">CIRUGÍA GENERAL</div>
+      <p class="arranque-resena">Historias clínicas, notas operatorias, evoluciones y órdenes médicas, egresos, interconsultas,
+        solicitudes, consentimientos y pacientes electivos: todos los formatos del servicio en un solo lugar.</p>
+      <div class="arranque-s" id="arranque-estado"></div>
+    </div>
+    <div class="arranque-autor"><span>Diseñada por</span><b>Dr. Edgardo Caripas</b></div>
+  </div>
+  <script src="lib/jszip.min.js"></script>
+  <script src="lib/docx-preview.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/iconos.js"></script>
+  <script src="js/logica.js"></script>
+  <script src="js/almacen.js"></script>
+  <script src="js/nucleo.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/copia.js"></script>
+  <script src="js/nube.js"></script>
+  <script src="js/vistaprevia.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    App.iniciar().catch((e) => {
+      const s = document.getElementById('arranque-estado');
+      if (s) s.textContent = 'NO SE PUDO INICIAR: ' + (e && e.message ? e.message : e) +
+        '. SI ESTÁ EN UNA VENTANA PRIVADA, ÁBRALA EN UNA VENTANA NORMAL.';
+      console.error(e);
+    });
+    // Funciona sin internet: los archivos de la app quedan guardados en el equipo (no en la app de Windows)
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !window.chrome?.webview) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
