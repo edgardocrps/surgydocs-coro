@@ -631,6 +631,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.5.5: SurgyDocs C: la línea de la Parte I (fecha y hora a la izquierda, nombre y edad pegados a la derecha, en negrita y subrayado, con la misma letra); politraumatizado con 1. HECHO VIOLENTO (sí/no), 2. POLITRAUMATIZADO y los traumatismos como 2.1, 2.2…',
       '8.5.4: SurgyDocs C: la línea de fecha, hora, nombre y edad de la Parte I queda en un solo renglón.',
       '8.5.3: nota operatoria con CIRUGÍA DE REVISIÓN y la incisión de MARROW (corregida). SurgyDocs C: logos del hospital y del postgrado en los formatos y datos del paciente sobre el motivo de consulta de la Parte I.',
       '8.5.0: menú de MEDICAMENTOS por categorías (antibióticos, analgésicos, antieméticos, protectores gástricos, corticoides, hemostáticos, insulina…) con "+ Agregar medicamento" propio; servicio al que ingresa el paciente (cirugía general, urología, otorrinolaringología) con su examen físico (genitales; oídos, nariz y boca); infecciones con diagnósticos de piel y partes blandas y absceso escrotal; versión SurgyDocs C para el Hospital Universitario Dr. Alfredo Van Grieken.',
