@@ -631,6 +631,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.5.6: SurgyDocs C: en la línea de la Parte I solo los títulos (FECHA, NOMBRE Y APELLIDO) van en negrita y subrayado; los datos escritos van normales.',
       '8.5.5: SurgyDocs C: la línea de la Parte I (fecha y hora a la izquierda, nombre y edad pegados a la derecha, en negrita y subrayado, con la misma letra); politraumatizado con 1. HECHO VIOLENTO (sí/no), 2. POLITRAUMATIZADO y los traumatismos como 2.1, 2.2…',
       '8.5.4: SurgyDocs C: la línea de fecha, hora, nombre y edad de la Parte I queda en un solo renglón.',
       '8.5.3: nota operatoria con CIRUGÍA DE REVISIÓN y la incisión de MARROW (corregida). SurgyDocs C: logos del hospital y del postgrado en los formatos y datos del paciente sobre el motivo de consulta de la Parte I.',
