@@ -1,6 +1,6 @@
 // 7.0: lógica de las pantallas (igual que Android): fechas, perfil, carpetas del paciente y agenda.
 
-const VERSION = '8.5.6';
+const VERSION = '8.5.7';
 
 // ------------------------------------------------------------------ fechas
 const Fecha = (() => {
