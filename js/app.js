@@ -631,6 +631,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.6.0: programa de Windows: en Windows 7 y 8 ofrece abrir la versión web en el navegador (el motor de Edge no funciona ahí). SurgyDocs C: hoja 5 = COMENTARIO DE INGRESO.',
       '8.5.9: SurgyDocs C: la hoja 5 de las historias se llama COMENTARIO DE INGRESO (antes NOTA DE INGRESO).',
       '8.5.8: SurgyDocs C: se quita el cuadro de texto institucional encima de la Parte I; la primera hoja empieza en PARTE I.',
       '8.5.7: SurgyDocs C: pacientes femeninas con tacto vaginal y especuloscopia en todas las historias (acepta / no acepta, con raya para la firma), tacto rectal con masa a la palpación y rótulo PARTE I sin subrayado. Cólico biliar SUBINTRANTE (corregido).',
