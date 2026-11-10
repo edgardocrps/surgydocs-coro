@@ -631,6 +631,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.5.8: SurgyDocs C: se quita el cuadro de texto institucional encima de la Parte I; la primera hoja empieza en PARTE I.',
       '8.5.7: SurgyDocs C: pacientes femeninas con tacto vaginal y especuloscopia en todas las historias (acepta / no acepta, con raya para la firma), tacto rectal con masa a la palpación y rótulo PARTE I sin subrayado. Cólico biliar SUBINTRANTE (corregido).',
       '8.5.6: SurgyDocs C: en la línea de la Parte I solo los títulos (FECHA, NOMBRE Y APELLIDO) van en negrita y subrayado; los datos escritos van normales.',
       '8.5.5: SurgyDocs C: la línea de la Parte I (fecha y hora a la izquierda, nombre y edad pegados a la derecha, en negrita y subrayado, con la misma letra); politraumatizado con 1. HECHO VIOLENTO (sí/no), 2. POLITRAUMATIZADO y los traumatismos como 2.1, 2.2…',
