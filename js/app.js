@@ -631,6 +631,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.6.1: paquete de Windows 7 con el motor de Edge 109 incluido (carpeta WebView2 junto al .exe).',
       '8.6.0: programa de Windows: en Windows 7 y 8 ofrece abrir la versión web en el navegador (el motor de Edge no funciona ahí). SurgyDocs C: hoja 5 = COMENTARIO DE INGRESO.',
       '8.5.9: SurgyDocs C: la hoja 5 de las historias se llama COMENTARIO DE INGRESO (antes NOTA DE INGRESO).',
       '8.5.8: SurgyDocs C: se quita el cuadro de texto institucional encima de la Parte I; la primera hoja empieza en PARTE I.',
