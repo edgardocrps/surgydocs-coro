@@ -631,6 +631,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.6.3: corregido el error "Maximum call stack size exceeded" al generar documentos en iPhone.',
       '8.6.2: SurgyDocs C: vuelve el cuadro institucional encima de la Parte I (Android, Windows y iPhone).',
       '8.6.1: paquete de Windows 7 con el motor de Edge 109 incluido (carpeta WebView2 junto al .exe).',
       '8.6.0: programa de Windows: en Windows 7 y 8 ofrece abrir la versión web en el navegador (el motor de Edge no funciona ahí). SurgyDocs C: hoja 5 = COMENTARIO DE INGRESO.',
