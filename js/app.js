@@ -631,6 +631,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.6.4: SurgyDocs C: tacto rectal en todos los pacientes (acepta / no acepta) y oídos en la Parte III, entre ojos y nariz.',
       '8.6.3: corregido el error "Maximum call stack size exceeded" al generar documentos en iPhone.',
       '8.6.2: SurgyDocs C: vuelve el cuadro institucional encima de la Parte I (Android, Windows y iPhone).',
       '8.6.1: paquete de Windows 7 con el motor de Edge 109 incluido (carpeta WebView2 junto al .exe).',
