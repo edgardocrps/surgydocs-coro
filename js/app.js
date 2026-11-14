@@ -17,7 +17,7 @@ const App = (() => {
     ['Emergencia · nuevo ingreso', HISTORIAS()],
     ['Hospitalización', segPorIds(Carpetas.HOSPITALIZACION)],
     ['Documentos', segPorIds(Carpetas.DOCUMENTOS)],
-    ['Herramientas', segPorIds(Carpetas.HERRAMIENTAS)],
+    ['Herramientas', segPorIds(HerrOrden.ordenar(Carpetas.HERRAMIENTAS))],
     ['Electivos', segPorIds(Carpetas.ELECTIVOS)],
   ];
 
@@ -193,7 +193,24 @@ const App = (() => {
     c.append(rej);
     c.append(subtitulo('Hospitalización'), rejillaSeguimiento(Carpetas.HOSPITALIZACION));
     c.append(subtitulo('Documentos'), rejillaSeguimiento(Carpetas.DOCUMENTOS));
-    c.append(subtitulo('Herramientas'), rejillaSeguimiento(Carpetas.HERRAMIENTAS));
+    // 8.11: fijadas y más usadas primero; el resto con "Ver todas" (mantén pulsada una para fijarla)
+    const contHerr = h('div');
+    const llenarHerr = () => {
+      contHerr.textContent = '';
+      const herr = HerrOrden.ordenar(Carpetas.HERRAMIENTAS);
+      const visibles = 8;
+      contHerr.append(rejillaSeguimiento(herr.slice(0, visibles), llenarHerr));
+      if (herr.length > visibles) {
+        const resto = rejillaSeguimiento(herr.slice(visibles), llenarHerr);
+        resto.hidden = !herrTodas;
+        const ver = h('button.enlace.ver-todas', { type: 'button' }, herrTodas ? 'VER MENOS' : `VER TODAS (${herr.length})`);
+        ver.addEventListener('click', () => { herrTodas = !herrTodas; resto.hidden = !herrTodas; ver.textContent = herrTodas ? 'VER MENOS' : `VER TODAS (${herr.length})`; requestAnimationFrame(() => ajustarTextos(pantalla)); });
+        contHerr.append(ver, resto);
+      }
+      requestAnimationFrame(() => ajustarTextos(pantalla));
+    };
+    llenarHerr();
+    c.append(subtitulo('Herramientas'), contHerr, h('div.etiqueta-suave.centro', 'MANTÉN PULSADA UNA HERRAMIENTA PARA FIJARLA ARRIBA'));
     c.append(subtitulo('Electivos'), rejillaSeguimiento(Carpetas.ELECTIVOS));
 
     const electivos = todas.filter((r) => Carpetas.ELECTIVOS.includes(r.tipo));
@@ -222,19 +239,43 @@ const App = (() => {
   /** 7.1: nombre de cada formato en los botones del Inicio (solo el nombre, sin descripción). */
   const TITULOS = {
     NOTA: 'NOTA OPERATORIA', EVOLUCION: 'EVOLUCIÓN Y ÓRDENES MÉDICAS', PROCEDIMIENTO: 'PROCEDIMIENTOS', CURVAS: 'CURVAS',
-    NPT: 'NUTRICIÓN PARENTERAL', BALANCE: 'BALANCE HÍDRICO', TROMBOSIS: 'TROMBOSIS (CAPRINI, WELLS)', PREOP: 'RIESGO PREOPERATORIO', HIGADO: 'FUNCIÓN HEPÁTICA', GRAVEDAD: 'GRAVEDAD (SOFA, APACHE II)', TRAUMA: 'TRAUMA (ISS, RTS)', REPOSICION: 'REPOSICIÓN (K, Mg, INSULINA)', CONVERSION: 'CONVERSIONES', NUTRICION: 'NUTRICIÓN RÁPIDA', LIQUIDOS: 'LÍQUIDOS Y GOTEO', ESCALAS: 'ESCALAS', ELECTROLITOS: 'ELECTROLITOS Y GASOMETRÍA', RENAL: 'FUNCIÓN RENAL', QUEMADOS: 'QUEMADOS', DOSIS: 'DOSIS POR PESO', IMC: 'IMC Y SUPERFICIE', EGRESO: 'EGRESOS', RESP_IC: 'RESPUESTA DE INTERCONSULTAS', NOTA_CG: 'NOTAS DE CIRUGÍA GENERAL',
+    NPT: 'NUTRICIÓN PARENTERAL', BALANCE: 'BALANCE HÍDRICO', HDA: 'HEMORRAGIA DIGESTIVA', ABDOMEN: 'ABDOMEN AGUDO (ESCALAS)', LESIONES: 'LESIONES DE TRAUMA', HERIDAS: 'HERIDAS E INFECCIÓN', TROMBOSIS: 'TROMBOSIS (CAPRINI, WELLS)', PREOP: 'RIESGO PREOPERATORIO', HIGADO: 'FUNCIÓN HEPÁTICA', GRAVEDAD: 'GRAVEDAD (SOFA, APACHE II)', TRAUMA: 'TRAUMA (ISS, RTS)', REPOSICION: 'REPOSICIÓN (K, Mg, INSULINA)', CONVERSION: 'CONVERSIONES', NUTRICION: 'NUTRICIÓN RÁPIDA', LIQUIDOS: 'LÍQUIDOS Y GOTEO', ESCALAS: 'ESCALAS', ELECTROLITOS: 'ELECTROLITOS Y GASOMETRÍA', RENAL: 'FUNCIÓN RENAL', QUEMADOS: 'QUEMADOS', DOSIS: 'DOSIS POR PESO', IMC: 'IMC Y SUPERFICIE', EGRESO: 'EGRESOS', RESP_IC: 'RESPUESTA DE INTERCONSULTAS', NOTA_CG: 'NOTAS DE CIRUGÍA GENERAL',
     SOLICITUDES: 'SOLICITUDES', CONSENTIMIENTO: 'CONSENTIMIENTOS INFORMADOS', INFORME: 'INFORME MÉDICO', REFERENCIA: 'INFORME DE ESTUDIOS',
     MATERIALES: 'MATERIALES', RECIPE: 'RÉCIPE E INDICACIONES', DAMERO: 'DAMERO DE LABORATORIOS', ELECTIVO: 'PACIENTES – CIRUGÍA GENERAL',
     ELECTIVO_URO: 'PACIENTES – UROLOGÍA', ELECTIVO_ORL: 'PACIENTES – ORL',
   };
 
-  function rejillaSeguimiento(ids) {
+  let herrTodas = false;
+  let ignorarClicHasta = 0;   // tras fijar con pulsación larga, el dedo al soltar no debe abrir la herramienta que quedó debajo
+
+  /** Pulsación larga (500 ms) o clic derecho sobre una herramienta: fijarla o quitarla. Funciona con el dedo (iPhone) y con el ratón. */
+  function pulsacionLarga(el, id, alFijar) {
+    let t = null, hecho = false, x0 = 0, y0 = 0;
+    const cancelar = () => { if (t) { clearTimeout(t); t = null; } };
+    const fijar = () => {
+      cancelar(); hecho = true; ignorarClicHasta = Date.now() + 800;
+      const ahora = HerrOrden.alternar(id);
+      aviso(ahora ? 'Fijada arriba' : 'Ya no está fijada');
+      alFijar();
+    };
+    el.addEventListener('pointerdown', (e) => { hecho = false; x0 = e.clientX; y0 = e.clientY; cancelar(); t = setTimeout(fijar, 500); });
+    el.addEventListener('pointermove', (e) => { if (t && (Math.abs(e.clientX - x0) > 8 || Math.abs(e.clientY - y0) > 8)) cancelar(); });
+    for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) el.addEventListener(ev, cancelar);
+    el.addEventListener('contextmenu', (e) => { e.preventDefault(); if (!hecho) fijar(); });
+    // el clic que sigue a una pulsación larga no debe abrir la herramienta
+    el.addEventListener('click', (e) => { if (hecho) { hecho = false; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+  }
+
+  function rejillaSeguimiento(ids, alFijar) {
     const rej = h('div.rejilla2');
     const mods = segPorIds(ids);
+    const fijas = alFijar ? HerrOrden.fijas() : [];
     mods.forEach((m, i) => {
       const f = info(m.id);
-      rej.append(h('button.mosaico2' + (i === 0 && mods.length % 2 === 1 ? '.ancho' : ''), { type: 'button', onclick: () => elegirOrigen(m.id) },
-        insigniaIcono(f.icono, 'cian'), h('div.textos', h('div.t1.ajustar', { 'data-grupo': 'seguimiento' }, TITULOS[m.id] || f.corto))));
+      const b = h('button.mosaico2' + (i === 0 && mods.length % 2 === 1 ? '.ancho' : '') + (alFijar ? '.fijable' : ''), { type: 'button', onclick: () => { if (Date.now() < ignorarClicHasta) return; elegirOrigen(m.id); } },
+        insigniaIcono(f.icono, 'cian'), h('div.textos', h('div.t1.ajustar', { 'data-grupo': 'seguimiento' }, (fijas.includes(m.id) ? '★ ' : '') + (TITULOS[m.id] || f.corto))));
+      if (alFijar) pulsacionLarga(b, m.id, alFijar);
+      rej.append(b);
     });
     return rej;
   }
@@ -633,6 +674,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.11.0: HERRAMIENTAS: 4 nuevas de cirugía general y trauma (hemorragia digestiva: Glasgow-Blatchford y Rockall; abdomen agudo: Tokio de colecistitis, Glasgow-Imrie, Atlanta, Hinchey, Boey, AIR y Clavien-Dindo; lesiones de trauma: Gustilo-Anderson, AAST de bazo, hígado y riñón y clase de hemorragia ATLS; heridas e infección: antitetánica, Wagner, Fournier y LRINEC). Mantén pulsada una herramienta (clic derecho en Windows) para fijarla arriba; las más usadas suben solas y el resto se ve con VER TODAS. POLITRAUMATIZADO: el neurológico lleva el Glasgow abreviado (AO, RV, RM con sus puntos y el total).',
       '8.10.0: HERRAMIENTAS con 16 calculadoras en pantalla: balance hídrico, líquidos y goteo, escalas quirúrgicas, electrolitos, función renal, quemados por regiones, dosis por peso, IMC, trombosis, riesgo preoperatorio, hígado, gravedad (SOFA, APACHE II), trauma, reposición (K, Mg, insulina), conversiones y nutrición rápida.',
       '8.9.1: HERRAMIENTAS: el balance hídrico queda en pantalla (sin hoja para imprimir): escribe lo ingerido y lo eliminado y se calcula solo; botón para copiar el resultado. Logos del hospital y del posgrado más grandes.',
       '8.9.0: nueva sección HERRAMIENTAS en el Inicio con el BALANCE HÍDRICO: escribe lo ingerido y lo eliminado y la app calcula ingresos, egresos, balance, diuresis por hora y por kilo y pérdidas insensibles.',
@@ -677,7 +719,7 @@ const App = (() => {
 
   function elegirOrigen(tipo) {
     const m = modulo(tipo);
-    if (m.herramienta) { nuevaHistoria(tipo); return; }
+    if (m.herramienta) { HerrOrden.contar(tipo); nuevaHistoria(tipo); return; }
     const { caja, cerrar } = hojaInferior(m.nombre);
     caja.append(boton('Datos nuevos', 'mas', 'marino ancho', () => { cerrar(); nuevaHistoria(tipo); }));
     const carpetas = Carpetas.agrupar(Almacen.listar());

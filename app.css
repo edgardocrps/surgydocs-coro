@@ -118,6 +118,9 @@ input, textarea { font: inherit; color: inherit; }
 .m-t { font-size: 10.5px; font-weight: 800; text-align: center; margin-top: 8px; align-self: stretch; }
 .mosaico2 { background: #fff; border-radius: 16px; padding: 10px 8px 10px 10px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 2px rgba(21,35,59,.08); min-width: 0; }
 .mosaico2.ancho { grid-column: span 2; }
+.mosaico2.fijable { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: manipulation; }
+.ver-todas { display: block; width: 100%; margin: 4px 0; padding: 10px 12px; border-radius: 12px; background: #e6f6fa; color: #15233b; font-weight: 700; font-size: 12.5px; text-align: center; }
+.centro { text-align: center; }
 .mosaico2 { min-height: 66px; }
 .mosaico2 .t1 { font-size: 12.5px; white-space: normal; overflow: visible; }
 .mosaico2 .insignia { width: 38px; height: 38px; }
@@ -319,3 +322,4 @@ textarea.campo { resize: vertical; min-height: 84px; line-height: 1.4; }
 .cat-lista { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
 .cat-med { background: #fff; border-radius: 14px; padding: 9px 12px; font-size: 11.5px; font-weight: 800; text-align: left; color: var(--marino, #15233B); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
 .cat-med.cat-nuevo { background: var(--marino, #15233B); color: #fff; text-align: center; }
+.rejilla2[hidden] { display: none; }

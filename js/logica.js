@@ -1,6 +1,6 @@
 // 7.0: lógica de las pantallas (igual que Android): fechas, perfil, carpetas del paciente y agenda.
 
-const VERSION = '8.10.0';
+const VERSION = '8.11.0';
 
 // ------------------------------------------------------------------ fechas
 const Fecha = (() => {
@@ -142,6 +142,33 @@ const Preferencias = {
   },
 };
 
+// ------------------------------------------------------------------ orden de las herramientas (Carpetas.HerrOrden): fijadas, más usadas, orden normal
+const HerrOrden = {
+  fijas() { try { return Almacen.pref('ajustes', 'herr_fijas').split(',').map((x) => x.trim()).filter(Boolean); } catch (_) { return []; } },
+  usos() {
+    const m = {};
+    try { for (const x of Almacen.pref('ajustes', 'herr_usos').split(',')) { const i = x.indexOf(':'); const n = parseInt(x.slice(i + 1), 10); if (i > 0 && !isNaN(n)) m[x.slice(0, i).trim()] = n; } } catch (_) {}
+    return m;
+  },
+  ordenar(ids) {
+    const fijas = HerrOrden.fijas().filter((x, i, a) => ids.includes(x) && a.indexOf(x) === i);
+    const usos = HerrOrden.usos();
+    const resto = ids.filter((x) => !fijas.includes(x)).map((x, i) => [x, i]);
+    resto.sort((a, b) => ((usos[b[0]] || 0) - (usos[a[0]] || 0)) || (a[1] - b[1]));
+    return [...fijas, ...resto.map((r) => r[0])];
+  },
+  alternar(id) {
+    const f = HerrOrden.fijas();
+    const n = f.includes(id) ? f.filter((x) => x !== id) : [...f, id];
+    try { Almacen.ponerPref('ajustes', { herr_fijas: n.join(',') }); } catch (_) {}
+    return n.includes(id);
+  },
+  contar(id) {
+    const u = HerrOrden.usos(); u[id] = (u[id] || 0) + 1;
+    try { Almacen.ponerPref('ajustes', { herr_usos: Object.entries(u).map(([k, v]) => `${k}:${v}`).join(',') }); } catch (_) {}
+  },
+};
+
 // ------------------------------------------------------------------ formatos: iniciales, nombre corto, descripción
 const INFO = {
   APENDICITIS: ['mod_apendice', 'APENDICITIS', 'Abdomen agudo inflamatorio', '7 hojas: Parte I, II y III, resumen, nota, órdenes y solicitud de intervención'],
@@ -183,6 +210,10 @@ const INFO = {
   REPOSICION: ['mod_procedimiento', 'REPOSICIÓN (K, Mg, INSULINA)', 'Potasio, magnesio e insulina de corrección', 'Dosis y velocidad sugeridas'],
   CONVERSION: ['mod_referencia', 'CONVERSIONES', 'Corticoides, opioides y antibióticos IV a VO', 'Dosis equivalentes'],
   NUTRICION: ['mod_materiales', 'NUTRICIÓN RÁPIDA', 'Calorías, proteínas y líquidos por peso', 'Requerimiento diario rápido'],
+  HDA: ['mod_colon', 'HEMORRAGIA DIGESTIVA', 'Glasgow-Blatchford y Rockall', 'Riesgo, necesidad de intervención y mortalidad'],
+  ABDOMEN: ['mod_abdomen', 'ABDOMEN AGUDO (ESCALAS)', 'Tokio de colecistitis, Glasgow-Imrie, Atlanta, Hinchey, Boey, AIR y Clavien-Dindo', 'Clasificación y conducta orientativa'],
+  LESIONES: ['mod_carro', 'LESIONES DE TRAUMA', 'Gustilo-Anderson, AAST de bazo, hígado y riñón, y clase de hemorragia ATLS', 'Grado, conducta y antibiótico sugerido'],
+  HERIDAS: ['mod_infeccion', 'HERIDAS E INFECCIÓN', 'Antitetánica, Wagner, Fournier (FGSI) y LRINEC', 'Conducta, puntaje y riesgo'],
   BALANCE: ['mod_curvas', 'BALANCE HÍDRICO', 'Ingresos, egresos, balance y diuresis horaria', '1 hoja: tabla de ingresos y egresos con el balance calculado, diuresis por hora y por kilo y pérdidas insensibles'],
   NPT: ['mod_npt', 'NUTRICIÓN PARENTERAL', 'GEB, GET, volúmenes, bolsa EVA y órdenes', '1–2 hojas: cálculo con su formato (GEB, GET, requerimientos, volúmenes, velocidad) e indicación; órdenes con hidratación ajustada'],
   EVOLUCION: ['mod_evolucion', 'EVOLUCIÓN', 'Evolución diaria y órdenes médicas', '2 hojas: evolución médica (días, diagnósticos, tratamiento, SOAP, plan) y órdenes médicas'],
@@ -193,7 +224,7 @@ const info = (id) => { const i = INFO[id]; return i ? { icono: i[0], corto: i[1]
 // ------------------------------------------------------------------ carpetas del paciente (Carpetas.kt)
 const Carpetas = (() => {
   const HOSPITALIZACION = ['NOTA', 'EVOLUCION', 'PROCEDIMIENTO', 'CURVAS', 'NPT', 'EGRESO'];
-  const HERRAMIENTAS = ['BALANCE', 'LIQUIDOS', 'ESCALAS', 'ELECTROLITOS', 'RENAL', 'QUEMADOS', 'DOSIS', 'IMC', 'TROMBOSIS', 'PREOP', 'HIGADO', 'GRAVEDAD', 'TRAUMA', 'REPOSICION', 'CONVERSION', 'NUTRICION'];
+  const HERRAMIENTAS = ['BALANCE', 'LIQUIDOS', 'ESCALAS', 'ELECTROLITOS', 'RENAL', 'QUEMADOS', 'DOSIS', 'IMC', 'TROMBOSIS', 'PREOP', 'HIGADO', 'GRAVEDAD', 'TRAUMA', 'REPOSICION', 'CONVERSION', 'NUTRICION', 'HDA', 'ABDOMEN', 'LESIONES', 'HERIDAS'];
   const DOCUMENTOS = ['RESP_IC', 'NOTA_CG', 'SOLICITUDES', 'CONSENTIMIENTO', 'INFORME', 'REFERENCIA', 'MATERIALES', 'RECIPE', 'DAMERO'];
   const ELECTIVOS = ['ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
   const HC = ['APENDICITIS', 'COLICO_RENAL', 'BILIAR', 'POLITRAUMA', 'OBSTRUCCION', 'VASCULAR', 'PARED', 'INFECCIONES', 'COLOPROCT', 'ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
