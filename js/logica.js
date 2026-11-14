@@ -1,6 +1,6 @@
 // 7.0: lógica de las pantallas (igual que Android): fechas, perfil, carpetas del paciente y agenda.
 
-const VERSION = '8.8.0';
+const VERSION = '8.9.0';
 
 // ------------------------------------------------------------------ fechas
 const Fecha = (() => {
@@ -92,7 +92,7 @@ const NombreArchivo = (() => {
     NOTA: 'NOTA OPERATORIA', EVOLUCION: 'EVOLUCIÓN Y ÓRDENES', EGRESO: 'EGRESO', RECIPE: 'RÉCIPE',
     RESP_IC: 'RESPUESTA IC', NOTA_CG: 'NOTA CG', MATERIALES: 'LISTA DE MATERIALES', INFORME: 'INFORME MÉDICO',
     REFERENCIA: 'INFORME DE ESTUDIO', SOLICITUDES: 'SOLICITUDES', CONSENTIMIENTO: 'CONSENTIMIENTO',
-    PROCEDIMIENTO: 'PROCEDIMIENTO', CURVAS: 'CURVAS', DAMERO: 'DAMERO', NPT: 'NUTRICIÓN PARENTERAL', ELECTIVO: 'HC ELECTIVO', ELECTIVO_URO: 'HC ELECTIVO UROLOGÍA', ELECTIVO_ORL: 'HC ELECTIVO ORL',
+    PROCEDIMIENTO: 'PROCEDIMIENTO', CURVAS: 'CURVAS', DAMERO: 'DAMERO', NPT: 'NUTRICIÓN PARENTERAL', BALANCE: 'BALANCE HÍDRICO', ELECTIVO: 'HC ELECTIVO', ELECTIVO_URO: 'HC ELECTIVO UROLOGÍA', ELECTIVO_ORL: 'HC ELECTIVO ORL',
   };
   // Solo letras (con tildes y Ñ), números y espacios: ningún guion ni símbolo
   const limpio = (t) => (t || '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim().toLocaleUpperCase('es');
@@ -115,7 +115,7 @@ const NombreArchivo = (() => {
       }
       case 'REFERENCIA': r = (d('ref_estudio') === 'TOMOGRAFÍA' && corto(d('ref_tac'))) || corto(d('ref_estudio')); break;
       case 'SOLICITUDES': case 'CONSENTIMIENTO': case 'EGRESO': case 'ELECTIVO': case 'ELECTIVO_URO': case 'ELECTIVO_ORL': r = corto(d('INTERVENCION')) || dx(); break;
-      case 'CURVAS': case 'NPT': case 'RECIPE': case 'DAMERO': r = ''; break;
+      case 'CURVAS': case 'NPT': case 'BALANCE': case 'RECIPE': case 'DAMERO': r = ''; break;
       default: r = dx();
     }
     return (r || '').slice(0, 70).trim();
@@ -168,6 +168,7 @@ const INFO = {
   ELECTIVO: ['mod_electivo', 'ELECTIVO', 'Ficha, checklist, historia y presentación', 'Historia electiva de 10 hojas (Word) y presentación del caso (PowerPoint); checklist de valoraciones y WhatsApp al paciente'],
   ELECTIVO_URO: ['mod_electivo', 'ELECTIVO UROLOGÍA', 'Ficha, checklist e historia de urología', 'Historia electiva de urología (Word, sin fotos ni presentación); checklist de valoraciones y WhatsApp al paciente'],
   ELECTIVO_ORL: ['mod_electivo', 'ELECTIVO ORL', 'Ficha, checklist e historia de otorrinolaringología', 'Historia electiva de otorrinolaringología (Word, sin fotos ni presentación); checklist de valoraciones y WhatsApp al paciente'],
+  BALANCE: ['mod_curvas', 'BALANCE HÍDRICO', 'Ingresos, egresos, balance y diuresis horaria', '1 hoja: tabla de ingresos y egresos con el balance calculado, diuresis por hora y por kilo y pérdidas insensibles'],
   NPT: ['mod_npt', 'NUTRICIÓN PARENTERAL', 'GEB, GET, volúmenes, bolsa EVA y órdenes', '1–2 hojas: cálculo con su formato (GEB, GET, requerimientos, volúmenes, velocidad) e indicación; órdenes con hidratación ajustada'],
   EVOLUCION: ['mod_evolucion', 'EVOLUCIÓN', 'Evolución diaria y órdenes médicas', '2 hojas: evolución médica (días, diagnósticos, tratamiento, SOAP, plan) y órdenes médicas'],
   EGRESO: ['mod_egreso', 'EGRESO', 'Récipe, indicaciones, resumen y alta', '3 hojas: récipe, indicaciones, cita y reposo o referencia; resumen de egreso (original y copia); órdenes de alta'],
@@ -177,6 +178,7 @@ const info = (id) => { const i = INFO[id]; return i ? { icono: i[0], corto: i[1]
 // ------------------------------------------------------------------ carpetas del paciente (Carpetas.kt)
 const Carpetas = (() => {
   const HOSPITALIZACION = ['NOTA', 'EVOLUCION', 'PROCEDIMIENTO', 'CURVAS', 'NPT', 'EGRESO'];
+  const HERRAMIENTAS = ['BALANCE'];
   const DOCUMENTOS = ['RESP_IC', 'NOTA_CG', 'SOLICITUDES', 'CONSENTIMIENTO', 'INFORME', 'REFERENCIA', 'MATERIALES', 'RECIPE', 'DAMERO'];
   const ELECTIVOS = ['ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
   const HC = ['APENDICITIS', 'COLICO_RENAL', 'BILIAR', 'POLITRAUMA', 'OBSTRUCCION', 'VASCULAR', 'PARED', 'INFECCIONES', 'COLOPROCT', 'ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
@@ -229,6 +231,7 @@ const Carpetas = (() => {
       RECIPE: ['RECIPE', 'EGRESO'],
       CURVAS: ['CURVAS', 'EVOLUCION'],
       NPT: ['NPT', 'EVOLUCION'],
+      BALANCE: ['BALANCE', 'EVOLUCION', ...HC],
       MATERIALES: ['MATERIALES', ...HC, 'NOTA'], INFORME: ['INFORME', ...HC, 'NOTA'], CONSENTIMIENTO: ['CONSENTIMIENTO', ...HC, 'NOTA'],
       REFERENCIA: ['REFERENCIA', ...HC, 'EVOLUCION'],
     }[tipo] || [];
@@ -237,7 +240,7 @@ const Carpetas = (() => {
     return orden[0] || null;
   }
 
-  return { HOSPITALIZACION, DOCUMENTOS, ELECTIVOS, claveNombre, agrupar, fecha, lineaDeTiempo, origenPara };
+  return { HOSPITALIZACION, DOCUMENTOS, HERRAMIENTAS, ELECTIVOS, claveNombre, agrupar, fecha, lineaDeTiempo, origenPara };
 })();
 
 // ------------------------------------------------------------------ agenda (Agenda.kt)

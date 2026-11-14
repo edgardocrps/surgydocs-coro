@@ -17,6 +17,7 @@ const App = (() => {
     ['Emergencia · nuevo ingreso', HISTORIAS()],
     ['Hospitalización', segPorIds(Carpetas.HOSPITALIZACION)],
     ['Documentos', segPorIds(Carpetas.DOCUMENTOS)],
+    ['Herramientas', segPorIds(Carpetas.HERRAMIENTAS)],
     ['Electivos', segPorIds(Carpetas.ELECTIVOS)],
   ];
 
@@ -192,6 +193,7 @@ const App = (() => {
     c.append(rej);
     c.append(subtitulo('Hospitalización'), rejillaSeguimiento(Carpetas.HOSPITALIZACION));
     c.append(subtitulo('Documentos'), rejillaSeguimiento(Carpetas.DOCUMENTOS));
+    c.append(subtitulo('Herramientas'), rejillaSeguimiento(Carpetas.HERRAMIENTAS));
     c.append(subtitulo('Electivos'), rejillaSeguimiento(Carpetas.ELECTIVOS));
 
     const electivos = todas.filter((r) => Carpetas.ELECTIVOS.includes(r.tipo));
@@ -220,7 +222,7 @@ const App = (() => {
   /** 7.1: nombre de cada formato en los botones del Inicio (solo el nombre, sin descripción). */
   const TITULOS = {
     NOTA: 'NOTA OPERATORIA', EVOLUCION: 'EVOLUCIÓN Y ÓRDENES MÉDICAS', PROCEDIMIENTO: 'PROCEDIMIENTOS', CURVAS: 'CURVAS',
-    NPT: 'NUTRICIÓN PARENTERAL', EGRESO: 'EGRESOS', RESP_IC: 'RESPUESTA DE INTERCONSULTAS', NOTA_CG: 'NOTAS DE CIRUGÍA GENERAL',
+    NPT: 'NUTRICIÓN PARENTERAL', BALANCE: 'BALANCE HÍDRICO', EGRESO: 'EGRESOS', RESP_IC: 'RESPUESTA DE INTERCONSULTAS', NOTA_CG: 'NOTAS DE CIRUGÍA GENERAL',
     SOLICITUDES: 'SOLICITUDES', CONSENTIMIENTO: 'CONSENTIMIENTOS INFORMADOS', INFORME: 'INFORME MÉDICO', REFERENCIA: 'INFORME DE ESTUDIOS',
     MATERIALES: 'MATERIALES', RECIPE: 'RÉCIPE E INDICACIONES', DAMERO: 'DAMERO DE LABORATORIOS', ELECTIVO: 'PACIENTES – CIRUGÍA GENERAL',
     ELECTIVO_URO: 'PACIENTES – UROLOGÍA', ELECTIVO_ORL: 'PACIENTES – ORL',
@@ -543,7 +545,7 @@ const App = (() => {
   // ------------------------------------------------------------------ FORMATOS
 
   function formatos() {
-    pantalla.append(cabecera('FORMATOS', 'EMERGENCIA, HOSPITALIZACIÓN Y DOCUMENTOS'));
+    pantalla.append(cabecera('FORMATOS', 'EMERGENCIA, HOSPITALIZACIÓN, DOCUMENTOS Y HERRAMIENTAS'));
     const c = cuerpo();
     for (const [titulo, mods] of grupos()) {
       c.append(subtitulo(titulo));
@@ -631,6 +633,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.9.0: nueva sección HERRAMIENTAS en el Inicio con el BALANCE HÍDRICO: escribe lo ingerido y lo eliminado y la app calcula ingresos, egresos, balance, diuresis por hora y por kilo y pérdidas insensibles.',
       '8.8.0: nuevo formato CÓLICO RENAL (cólico renoureteral derecho o izquierdo) en nuevos ingresos, en SurgyDocs y SurgyDocs C: sin fiebre ni antipiréticos, con puñopercusión y puntos ureterales, sin solicitudes ni preparar para quirófano.',
       '8.7.0: SurgyDocs C: boleta de solicitud de transfusión (original y copia, hoja horizontal); sin solicitud de intervención quirúrgica; oídos en la Parte II; politraumatismo; solo cirugía general; días de antibiótico iguales a los de evolución.',
       '8.6.5: SurgyDocs C: politraumatizado con 2.1 craneoencefálico (leve, moderado o severo), 2.2 toracoabdominal cerrado no complicado y 2.3 musculoesquelético siempre en ese orden.',
