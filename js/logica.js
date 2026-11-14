@@ -1,6 +1,6 @@
 // 7.0: lógica de las pantallas (igual que Android): fechas, perfil, carpetas del paciente y agenda.
 
-const VERSION = '8.9.1';
+const VERSION = '8.10.0';
 
 // ------------------------------------------------------------------ fechas
 const Fecha = (() => {
@@ -168,6 +168,21 @@ const INFO = {
   ELECTIVO: ['mod_electivo', 'ELECTIVO', 'Ficha, checklist, historia y presentación', 'Historia electiva de 10 hojas (Word) y presentación del caso (PowerPoint); checklist de valoraciones y WhatsApp al paciente'],
   ELECTIVO_URO: ['mod_electivo', 'ELECTIVO UROLOGÍA', 'Ficha, checklist e historia de urología', 'Historia electiva de urología (Word, sin fotos ni presentación); checklist de valoraciones y WhatsApp al paciente'],
   ELECTIVO_ORL: ['mod_electivo', 'ELECTIVO ORL', 'Ficha, checklist e historia de otorrinolaringología', 'Historia electiva de otorrinolaringología (Word, sin fotos ni presentación); checklist de valoraciones y WhatsApp al paciente'],
+  LIQUIDOS: ['mod_npt', 'LÍQUIDOS Y GOTEO', 'Mantenimiento, ml/h y gotas por minuto', 'Adultos y niños; goteo con macro o microgotero'],
+  ESCALAS: ['mod_nota', 'ESCALAS', 'Alvarado, Tokio, BISAP, Ranson, Mannheim, qSOFA, Glasgow', 'Puntaje e interpretación al marcar los criterios'],
+  ELECTROLITOS: ['mod_informe', 'ELECTROLITOS Y GASOMETRÍA', 'Sodio corregido, brecha aniónica, osmolaridad, déficits', 'Calcula con los valores que escriba'],
+  RENAL: ['mod_egreso', 'FUNCIÓN RENAL', 'Cockcroft-Gault, CKD-EPI y estadio', 'Para ajustar antibióticos y fármacos'],
+  QUEMADOS: ['mod_infeccion', 'QUEMADOS', 'Regla de los 9 y líquidos de Parkland', 'Superficie quemada y ritmo de las primeras 24 horas'],
+  DOSIS: ['mod_recipe', 'DOSIS POR PESO', 'Antibióticos, analgésicos y otros', 'Dosis y tope por fármaco; confirmar en el vademécum'],
+  IMC: ['mod_materiales', 'IMC Y SUPERFICIE', 'IMC, superficie corporal y peso ideal', 'Con clasificación de la OMS'],
+  TROMBOSIS: ['mod_pie', 'TROMBOSIS (CAPRINI, WELLS)', 'Caprini, Wells TEP y Wells TVP', 'Puntaje, probabilidad y profilaxis sugerida'],
+  PREOP: ['mod_consentimiento', 'RIESGO PREOPERATORIO', 'ASA e índice de Lee (RCRI)', 'Clase y riesgo cardíaco'],
+  HIGADO: ['mod_higado', 'FUNCIÓN HEPÁTICA', 'Child-Pugh, MELD y MELD-Na', 'Clase y mortalidad estimada'],
+  GRAVEDAD: ['mod_evolucion', 'GRAVEDAD (SOFA, APACHE II)', 'SOFA y APACHE II', 'Puntaje y mortalidad aproximada'],
+  TRAUMA: ['mod_carro', 'TRAUMA (ISS, RTS)', 'ISS, RTS, ABC e índice de shock', 'Gravedad y riesgo de transfusión masiva'],
+  REPOSICION: ['mod_procedimiento', 'REPOSICIÓN (K, Mg, INSULINA)', 'Potasio, magnesio e insulina de corrección', 'Dosis y velocidad sugeridas'],
+  CONVERSION: ['mod_referencia', 'CONVERSIONES', 'Corticoides, opioides y antibióticos IV a VO', 'Dosis equivalentes'],
+  NUTRICION: ['mod_materiales', 'NUTRICIÓN RÁPIDA', 'Calorías, proteínas y líquidos por peso', 'Requerimiento diario rápido'],
   BALANCE: ['mod_curvas', 'BALANCE HÍDRICO', 'Ingresos, egresos, balance y diuresis horaria', '1 hoja: tabla de ingresos y egresos con el balance calculado, diuresis por hora y por kilo y pérdidas insensibles'],
   NPT: ['mod_npt', 'NUTRICIÓN PARENTERAL', 'GEB, GET, volúmenes, bolsa EVA y órdenes', '1–2 hojas: cálculo con su formato (GEB, GET, requerimientos, volúmenes, velocidad) e indicación; órdenes con hidratación ajustada'],
   EVOLUCION: ['mod_evolucion', 'EVOLUCIÓN', 'Evolución diaria y órdenes médicas', '2 hojas: evolución médica (días, diagnósticos, tratamiento, SOAP, plan) y órdenes médicas'],
@@ -178,7 +193,7 @@ const info = (id) => { const i = INFO[id]; return i ? { icono: i[0], corto: i[1]
 // ------------------------------------------------------------------ carpetas del paciente (Carpetas.kt)
 const Carpetas = (() => {
   const HOSPITALIZACION = ['NOTA', 'EVOLUCION', 'PROCEDIMIENTO', 'CURVAS', 'NPT', 'EGRESO'];
-  const HERRAMIENTAS = ['BALANCE'];
+  const HERRAMIENTAS = ['BALANCE', 'LIQUIDOS', 'ESCALAS', 'ELECTROLITOS', 'RENAL', 'QUEMADOS', 'DOSIS', 'IMC', 'TROMBOSIS', 'PREOP', 'HIGADO', 'GRAVEDAD', 'TRAUMA', 'REPOSICION', 'CONVERSION', 'NUTRICION'];
   const DOCUMENTOS = ['RESP_IC', 'NOTA_CG', 'SOLICITUDES', 'CONSENTIMIENTO', 'INFORME', 'REFERENCIA', 'MATERIALES', 'RECIPE', 'DAMERO'];
   const ELECTIVOS = ['ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
   const HC = ['APENDICITIS', 'COLICO_RENAL', 'BILIAR', 'POLITRAUMA', 'OBSTRUCCION', 'VASCULAR', 'PARED', 'INFECCIONES', 'COLOPROCT', 'ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];

@@ -581,6 +581,8 @@ const Editor = (() => {
   }
   function actualizarCabecera() {
     const n = nombreCompleto();
+    // 8.10: las herramientas no son de un paciente: el título es el nombre de la herramienta
+    if (actual.modulo && actual.modulo.herramienta) { actual.nombreEl.textContent = mayus(actual.modulo.nombre); actual.nombreEl.classList.remove('sin-nombre'); return; }
     actual.nombreEl.textContent = n || 'PACIENTE SIN NOMBRE';
     actual.nombreEl.classList.toggle('sin-nombre', !n);
   }
@@ -714,8 +716,8 @@ const Editor = (() => {
     const cab = h('header.ed-cabecera',
       h('div.ed-barra',
         h('button.ed-atras', { type: 'button', 'aria-label': 'Volver', onclick: () => cerrar() }, icono('atras')),
-        h('div.ed-titulos', st.nombreEl, h('div.ed-modulo', mayus((nuevaHistoria ? 'Nueva historia · ' : '') + modulo.nombre))),
-        boton('Guardar', 'guardar', 'cian chico', () => aviso(guardar() ? 'Historia guardada' : 'No hay datos para guardar todavía'))),
+        h('div.ed-titulos', st.nombreEl, h('div.ed-modulo', mayus(modulo.herramienta ? 'Herramienta · se calcula sola' : (nuevaHistoria ? 'Nueva historia · ' : '') + modulo.nombre))),
+        modulo.herramienta ? null : boton('Guardar', 'guardar', 'cian chico', () => aviso(guardar() ? 'Historia guardada' : 'No hay datos para guardar todavía'))),
       h('div.ed-avance', h('div.ed-pista', st.barra = h('div.ed-relleno')), st.avanceTexto = h('div.ed-avance-texto')),
       st.tira = h('nav.ed-pestanas'));
     pantalla.append(cab);

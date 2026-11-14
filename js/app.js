@@ -222,7 +222,7 @@ const App = (() => {
   /** 7.1: nombre de cada formato en los botones del Inicio (solo el nombre, sin descripción). */
   const TITULOS = {
     NOTA: 'NOTA OPERATORIA', EVOLUCION: 'EVOLUCIÓN Y ÓRDENES MÉDICAS', PROCEDIMIENTO: 'PROCEDIMIENTOS', CURVAS: 'CURVAS',
-    NPT: 'NUTRICIÓN PARENTERAL', BALANCE: 'BALANCE HÍDRICO', EGRESO: 'EGRESOS', RESP_IC: 'RESPUESTA DE INTERCONSULTAS', NOTA_CG: 'NOTAS DE CIRUGÍA GENERAL',
+    NPT: 'NUTRICIÓN PARENTERAL', BALANCE: 'BALANCE HÍDRICO', TROMBOSIS: 'TROMBOSIS (CAPRINI, WELLS)', PREOP: 'RIESGO PREOPERATORIO', HIGADO: 'FUNCIÓN HEPÁTICA', GRAVEDAD: 'GRAVEDAD (SOFA, APACHE II)', TRAUMA: 'TRAUMA (ISS, RTS)', REPOSICION: 'REPOSICIÓN (K, Mg, INSULINA)', CONVERSION: 'CONVERSIONES', NUTRICION: 'NUTRICIÓN RÁPIDA', LIQUIDOS: 'LÍQUIDOS Y GOTEO', ESCALAS: 'ESCALAS', ELECTROLITOS: 'ELECTROLITOS Y GASOMETRÍA', RENAL: 'FUNCIÓN RENAL', QUEMADOS: 'QUEMADOS', DOSIS: 'DOSIS POR PESO', IMC: 'IMC Y SUPERFICIE', EGRESO: 'EGRESOS', RESP_IC: 'RESPUESTA DE INTERCONSULTAS', NOTA_CG: 'NOTAS DE CIRUGÍA GENERAL',
     SOLICITUDES: 'SOLICITUDES', CONSENTIMIENTO: 'CONSENTIMIENTOS INFORMADOS', INFORME: 'INFORME MÉDICO', REFERENCIA: 'INFORME DE ESTUDIOS',
     MATERIALES: 'MATERIALES', RECIPE: 'RÉCIPE E INDICACIONES', DAMERO: 'DAMERO DE LABORATORIOS', ELECTIVO: 'PACIENTES – CIRUGÍA GENERAL',
     ELECTIVO_URO: 'PACIENTES – UROLOGÍA', ELECTIVO_ORL: 'PACIENTES – ORL',
@@ -350,7 +350,7 @@ const App = (() => {
   function nuevoEnCarpeta(cp) {
     const { caja, cerrar } = hojaInferior('Nuevo documento', cp.nombre);
     const lista = h('div.hoja-lista');
-    for (const [titulo, mods] of [...grupos().slice(1), grupos()[0]]) {
+    for (const [titulo, mods] of [...grupos().slice(1), grupos()[0]].filter((g) => g[0] !== 'Herramientas')) {
       lista.append(h('div.etiqueta-suave.margen', mayus(titulo)));
       for (const m of mods) lista.append(filaFormato(m, () => { cerrar(); crearEnCarpeta(cp, m.id); }));
     }
@@ -633,6 +633,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.10.0: HERRAMIENTAS con 16 calculadoras en pantalla: balance hídrico, líquidos y goteo, escalas quirúrgicas, electrolitos, función renal, quemados por regiones, dosis por peso, IMC, trombosis, riesgo preoperatorio, hígado, gravedad (SOFA, APACHE II), trauma, reposición (K, Mg, insulina), conversiones y nutrición rápida.',
       '8.9.1: HERRAMIENTAS: el balance hídrico queda en pantalla (sin hoja para imprimir): escribe lo ingerido y lo eliminado y se calcula solo; botón para copiar el resultado. Logos del hospital y del posgrado más grandes.',
       '8.9.0: nueva sección HERRAMIENTAS en el Inicio con el BALANCE HÍDRICO: escribe lo ingerido y lo eliminado y la app calcula ingresos, egresos, balance, diuresis por hora y por kilo y pérdidas insensibles.',
       '8.8.0: nuevo formato CÓLICO RENAL (cólico renoureteral derecho o izquierdo) en nuevos ingresos, en SurgyDocs y SurgyDocs C: sin fiebre ni antipiréticos, con puñopercusión y puntos ureterales, sin solicitudes ni preparar para quirófano.',

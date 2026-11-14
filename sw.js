@@ -2,7 +2,7 @@
 // Lo genera tools/construir_web.sh (lista de archivos y versión); no editar sw.js a mano.
 // SurgyDocs usa 'historias-' y SurgyDocs C usa 'coro-' (mismo dominio: cada una borra solo sus propias versiones viejas)
 const PREFIJO = 'coro-';
-const CACHE = PREFIJO + '8.9.1-2f197c3bed';
+const CACHE = PREFIJO + '8.10.0-6e6edbce53';
 const ARCHIVOS = ["./","app.css","assets/base_formatos.docx","assets/damero.docx","assets/plantilla_apendicitis.docx","assets/plantilla_biliar.docx","assets/plantilla_colico_renal.docx","assets/plantilla_hernia_inguinal.docx","assets/plantilla_hernia_umbilical.docx","assets/plantilla_obstruccion.docx","assets/plantilla_politrauma.docx","assets/plantilla_vascular.docx","assets/presentacion_electivos.pptx","iconos/favicon.png","iconos/icono.ico","iconos/icono.svg","iconos/icono-180.png","iconos/icono-192.png","iconos/icono-512.png","iconos/icono-maskable-512.png","iconos/logo.svg","index.html","js/almacen.js","js/app.js","js/config.js","js/copia.js","js/editor.js","js/iconos.js","js/logica.js","js/nube.js","js/nucleo.js","js/ui.js","js/vistaprevia.js","lib/docx-preview.min.js","lib/jszip.min.js","manifest.webmanifest","nucleo.js","trabajador.js"];
 
 self.addEventListener('install', (e) => {
