@@ -631,6 +631,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.8.0: nuevo formato CÓLICO RENAL (cólico renoureteral derecho o izquierdo) en nuevos ingresos, en SurgyDocs y SurgyDocs C: sin fiebre ni antipiréticos, con puñopercusión y puntos ureterales, sin solicitudes ni preparar para quirófano.',
       '8.7.0: SurgyDocs C: boleta de solicitud de transfusión (original y copia, hoja horizontal); sin solicitud de intervención quirúrgica; oídos en la Parte II; politraumatismo; solo cirugía general; días de antibiótico iguales a los de evolución.',
       '8.6.5: SurgyDocs C: politraumatizado con 2.1 craneoencefálico (leve, moderado o severo), 2.2 toracoabdominal cerrado no complicado y 2.3 musculoesquelético siempre en ese orden.',
       '8.6.4: SurgyDocs C: tacto rectal en todos los pacientes (acepta / no acepta) y oídos en la Parte III, entre ojos y nariz.',

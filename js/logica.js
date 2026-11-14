@@ -1,6 +1,6 @@
 // 7.0: lógica de las pantallas (igual que Android): fechas, perfil, carpetas del paciente y agenda.
 
-const VERSION = '8.7.0';
+const VERSION = '8.8.0';
 
 // ------------------------------------------------------------------ fechas
 const Fecha = (() => {
@@ -88,7 +88,7 @@ function nombreArchivo(t) { return (t || '').trim().replace(/[^A-Za-z0-9ÁÉÍÓ
  */
 const NombreArchivo = (() => {
   const ETIQUETAS = {
-    APENDICITIS: 'HC', BILIAR: 'HC', POLITRAUMA: 'HC', OBSTRUCCION: 'HC', VASCULAR: 'HC', PARED: 'HC', INFECCIONES: 'HC', COLOPROCT: 'HC',
+    APENDICITIS: 'HC', COLICO_RENAL: 'HC', BILIAR: 'HC', POLITRAUMA: 'HC', OBSTRUCCION: 'HC', VASCULAR: 'HC', PARED: 'HC', INFECCIONES: 'HC', COLOPROCT: 'HC',
     NOTA: 'NOTA OPERATORIA', EVOLUCION: 'EVOLUCIÓN Y ÓRDENES', EGRESO: 'EGRESO', RECIPE: 'RÉCIPE',
     RESP_IC: 'RESPUESTA IC', NOTA_CG: 'NOTA CG', MATERIALES: 'LISTA DE MATERIALES', INFORME: 'INFORME MÉDICO',
     REFERENCIA: 'INFORME DE ESTUDIO', SOLICITUDES: 'SOLICITUDES', CONSENTIMIENTO: 'CONSENTIMIENTO',
@@ -103,7 +103,7 @@ const NombreArchivo = (() => {
     const dx = () => corto(d('DX_CORTO')) || corto(d('DX_PRINCIPAL')) || corto(d('DX_SEL')) || corto(d('DX_L'));
     let r;
     switch (tipo) {
-      case 'APENDICITIS': case 'BILIAR': case 'POLITRAUMA': case 'OBSTRUCCION': case 'VASCULAR': case 'PARED': case 'INFECCIONES': case 'COLOPROCT': r = dx() || limpio(nombreModulo); break;
+      case 'APENDICITIS': case 'COLICO_RENAL': case 'BILIAR': case 'POLITRAUMA': case 'OBSTRUCCION': case 'VASCULAR': case 'PARED': case 'INFECCIONES': case 'COLOPROCT': r = dx() || limpio(nombreModulo); break;
       case 'NOTA': r = corto(d('INTERV_REALIZADA')) || corto(d('INTERV_INDICADA')); break;
       case 'PROCEDIMIENTO': r = corto(d('proc')); break;
       case 'MATERIALES': r = corto(d('mat_cirugia')); break;
@@ -145,6 +145,7 @@ const Preferencias = {
 // ------------------------------------------------------------------ formatos: iniciales, nombre corto, descripción
 const INFO = {
   APENDICITIS: ['mod_apendice', 'APENDICITIS', 'Abdomen agudo inflamatorio', '7 hojas: Parte I, II y III, resumen, nota, órdenes y solicitud de intervención'],
+  COLICO_RENAL: ['mod_abdomen', 'CÓLICO RENAL', 'Cólico renoureteral derecho o izquierdo', '6 hojas: Parte I, II y III, resumen, nota y órdenes'],
   BILIAR: ['mod_higado', 'BILIAR', 'Colecistitis, colangitis, pancreatitis', '10 hojas: las 6 clínicas, solicitud de intervención, hemoderivados e interconsulta (2 hojas)'],
   POLITRAUMA: ['mod_carro', 'POLITRAUMA', 'Trauma abdominal abierto o cerrado', '6 hojas; con intervención agrega la solicitud y los hemoderivados indicados'],
   OBSTRUCCION: ['mod_colon', 'OBSTRUCCIÓN', 'Abdomen agudo obstructivo', '12 hojas: las 6 clínicas, solicitud, CG, PFC, interconsulta (2 hojas) y consentimiento'],
@@ -178,7 +179,7 @@ const Carpetas = (() => {
   const HOSPITALIZACION = ['NOTA', 'EVOLUCION', 'PROCEDIMIENTO', 'CURVAS', 'NPT', 'EGRESO'];
   const DOCUMENTOS = ['RESP_IC', 'NOTA_CG', 'SOLICITUDES', 'CONSENTIMIENTO', 'INFORME', 'REFERENCIA', 'MATERIALES', 'RECIPE', 'DAMERO'];
   const ELECTIVOS = ['ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
-  const HC = ['APENDICITIS', 'BILIAR', 'POLITRAUMA', 'OBSTRUCCION', 'VASCULAR', 'PARED', 'INFECCIONES', 'COLOPROCT', 'ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
+  const HC = ['APENDICITIS', 'COLICO_RENAL', 'BILIAR', 'POLITRAUMA', 'OBSTRUCCION', 'VASCULAR', 'PARED', 'INFECCIONES', 'COLOPROCT', 'ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
 
   const claveNombre = (n) => sinTildes(mayus(n || '')).replace('(COPIA)', '').replace(/[^A-Z0-9Ñ ]/g, ' ').replace(/\s+/g, ' ').trim();
   const sinNombre = (r) => !r.nombre.trim() || r.nombre === '(SIN NOMBRE)';
