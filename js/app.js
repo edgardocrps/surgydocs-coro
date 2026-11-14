@@ -633,6 +633,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.9.1: HERRAMIENTAS: el balance hídrico queda en pantalla (sin hoja para imprimir): escribe lo ingerido y lo eliminado y se calcula solo; botón para copiar el resultado. Logos del hospital y del posgrado más grandes.',
       '8.9.0: nueva sección HERRAMIENTAS en el Inicio con el BALANCE HÍDRICO: escribe lo ingerido y lo eliminado y la app calcula ingresos, egresos, balance, diuresis por hora y por kilo y pérdidas insensibles.',
       '8.8.0: nuevo formato CÓLICO RENAL (cólico renoureteral derecho o izquierdo) en nuevos ingresos, en SurgyDocs y SurgyDocs C: sin fiebre ni antipiréticos, con puñopercusión y puntos ureterales, sin solicitudes ni preparar para quirófano.',
       '8.7.0: SurgyDocs C: boleta de solicitud de transfusión (original y copia, hoja horizontal); sin solicitud de intervención quirúrgica; oídos en la Parte II; politraumatismo; solo cirugía general; días de antibiótico iguales a los de evolución.',
@@ -675,6 +676,7 @@ const App = (() => {
 
   function elegirOrigen(tipo) {
     const m = modulo(tipo);
+    if (m.herramienta) { nuevaHistoria(tipo); return; }
     const { caja, cerrar } = hojaInferior(m.nombre);
     caja.append(boton('Datos nuevos', 'mas', 'marino ancho', () => { cerrar(); nuevaHistoria(tipo); }));
     const carpetas = Carpetas.agrupar(Almacen.listar());

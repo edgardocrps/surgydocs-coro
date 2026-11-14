@@ -617,6 +617,7 @@ const Editor = (() => {
   function guardar() {
     const st = actual;
     if (!st || st.borrado || !st.campos.size) return false;
+    if (st.modulo && st.modulo.herramienta) return false;   // 8.9.1: las herramientas no se guardan
     const actuales = getterValores();
     if (!Almacen.existe(st.id) && !nombreCompleto() && JSON.stringify(actuales) === st.valoresIniciales) return false;
     const datos = valoresActuales();
@@ -732,7 +733,7 @@ const Editor = (() => {
       p.pie = h('div.pie-pestana',
         i > 0 ? boton('Anterior', 'atras', 'blanco', () => mostrarPestana(i - 1)) : null,
         i < st.pestanas.length - 1 ? boton('Siguiente: ' + st.pestanas[i + 1].nombre, 'siguiente', 'marino grande', () => mostrarPestana(i + 1))
-          : boton('Vista previa completa', 'ver', 'cian grande', () => vistaPrevia(1)));
+          : (st.modulo && st.modulo.herramienta ? null : boton('Vista previa completa', 'ver', 'cian grande', () => vistaPrevia(1))));
       cont.append(p.pie);
     });
     // 8.2: el paciente electivo se puede eliminar desde su propia ficha (primera pestaña); su cirugía sale de la agenda
@@ -740,8 +741,10 @@ const Editor = (() => {
       st.pestanas[0].pie.append(h('div.eliminar-fila', boton('Eliminar paciente electivo', 'cerrar', 'peligro ancho', eliminarElectivo)));
     }
     st.botonVista = h('button.flotante', { type: 'button', onclick: () => vistaPrevia(st.pestanas[st.actual].hoja) }, icono('ver'), h('span.fl-texto', 'VISTA PREVIA'));
-    pantalla.append(st.scroll, st.botonVista);
-    pantalla.append(h('footer.ed-pie',
+    const herramienta = !!(st.modulo && st.modulo.herramienta);
+    pantalla.append(st.scroll);
+    if (!herramienta) pantalla.append(st.botonVista);
+    if (!herramienta) pantalla.append(h('footer.ed-pie',
       boton(esWindows ? 'Abrir en Word' : 'Abrir', 'abrir', 'blanco', async () => { const b = await generarDocx(); if (b) abrirArchivo(b, nombreDocx()); }),
       boton('Compartir', 'compartir', 'cian', async () => { const b = await generarDocx(); if (b) compartirArchivo(b, nombreDocx()); }),
       boton('Descargar', 'descargar', 'blanco', async () => { const b = await generarDocx(); if (b) { descargar(b, nombreDocx()); if (!enAppWindows && !esIOS) aviso('Descargado: ' + nombreDocx(), true); } })));
