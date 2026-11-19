@@ -1,6 +1,6 @@
 // 7.0: lógica de las pantallas (igual que Android): fechas, perfil, carpetas del paciente y agenda.
 
-const VERSION = '8.13.1';
+const VERSION = '8.13.2';
 
 // ------------------------------------------------------------------ fechas
 const Fecha = (() => {
@@ -172,7 +172,7 @@ const HerrOrden = {
 // ------------------------------------------------------------------ formatos: iniciales, nombre corto, descripción
 const INFO = {
   APENDICITIS: ['mod_apendice', 'APENDICITIS', 'Abdomen agudo inflamatorio', '7 hojas: Parte I, II y III, resumen, nota, órdenes y solicitud de intervención'],
-  MAMA: ['mod_mama', 'MAMA', 'Patología mamaria: masa, cáncer, mastitis', '7 hojas: Parte I, II y III (con mamas debajo del tórax), resumen, nota, órdenes y solicitud de intervención'],
+  MAMA: ['mod_mama', 'PATOLOGÍA MAMARIA', 'Masa, cáncer, mastitis, absceso mamario', '7 hojas: Parte I, II y III (con mamas debajo del tórax), resumen, nota, órdenes y solicitud de intervención'],
   COLICO_RENAL: ['mod_abdomen', 'CÓLICO RENAL', 'Cólico renoureteral derecho o izquierdo', '6 hojas: Parte I, II y III, resumen, nota y órdenes'],
   BILIAR: ['mod_higado', 'BILIAR', 'Colecistitis, colangitis, pancreatitis', '10 hojas: las 6 clínicas, solicitud de intervención, hemoderivados e interconsulta (2 hojas)'],
   POLITRAUMA: ['mod_carro', 'POLITRAUMA', 'Trauma abdominal abierto o cerrado', '6 hojas; con intervención agrega la solicitud y los hemoderivados indicados'],
