@@ -674,6 +674,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.14.1: INTERCONSULTA: los signos vitales incluyen PVC (solo si es necesario) y glicemia capilar solo en pacientes diabéticos (aparece en el formulario cuando los diagnósticos tienen DIABETES y se trae sola de la historia).',
       '8.14.0: INTERCONSULTA: nueva opción DOS POR HOJA (hoja horizontal con el original a la izquierda y la copia a la derecha, línea de corte en el centro, hoja llena de hospital a comentario, con los bloques bien separados) además de UNA POR HOJA; toma el examen físico de la historia y permite agregar cara, nariz, cuello y mama. EVOLUCIÓN: examen con CARA, NARIZ y CUELLO opcionales, en el orden cara, nariz, cuello, mama, tórax, abdomen, extremidades y neurológico. SurgyDocs C: el cuadro de la primera hoja sale vacío para que lo llene historias médicas.',
       '8.13.2: EXAMEN DE MAMA con el formato MAMA: SIMÉTRICAS, TURGENTES, SIN SECRECIÓN (botones de simetría y aspecto; masa, piel, pezón y axila solo si hay patología). El formato de emergencia se llama PATOLOGÍA MAMARIA. Hemoderivados de las órdenes de la evolución: las opciones salen en una lista debajo del campo (TOQUE PARA AGREGAR).',
       '8.13.1: MAMAS: se corrige el examen de mamas, que no mostraba la piel, el pezón ni la masa. Ahora se elige MAMA NATIVA o POSTOPERATORIA (viene en mama nativa) y aparecen todos los campos.',
