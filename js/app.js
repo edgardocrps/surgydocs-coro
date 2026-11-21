@@ -677,6 +677,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.16.3: BALANCE HÍDRICO: el resultado sale en seis renglones: INGRESOS, ELIMINADOS, BALANCE HÍDRICO, VOLUMEN URINARIO, DIURESIS HORARIA (DH, en CC/HORA) y GASTO URINARIO (GU, en CC/HORA/KG), con los miles con punto.',
       '8.16.2: Los interruptores del examen físico dicen solo DESCRIBIR NARIZ, CUELLO, MAMAS, CARA y BOCA. En las órdenes de la evolución el botón CURAS ya no viene marcado por defecto.',
       '8.16.1: SurgyDocs C: la hidratación estándar dice EV (2000CC DE SOLUCIÓN 0.9% EV A RAZÓN DE 28 GOTAS POR MINUTO) en lugar de ENDOVENOSA.',
       '8.16.0: SurgyDocs C: sin pacientes electivos (cirugía general, urología ni ORL) y sin ninguna mención a urología ni otorrinolaringología (siempre cirugía general: se quitó el servicio de las órdenes, el egreso, la nota operatoria y la interconsulta, y las listas de materiales de esos servicios). Hidratación estándar en todos los formatos: 2000CC DE SOLUCIÓN 0.9% ENDOVENOSA A RAZÓN DE 28 GOTAS POR MINUTO. HERRAMIENTAS solo con balance hídrico, quemados, función renal, IMC y superficie, y nutrición parenteral. NUTRICIÓN PARENTERAL: sin velocidad, osmolaridad estimada ni indicación, y a hoja completa.',
