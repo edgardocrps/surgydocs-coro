@@ -211,7 +211,7 @@ const App = (() => {
     };
     llenarHerr();
     c.append(subtitulo('Herramientas'), contHerr, h('div.etiqueta-suave.centro', 'MANTÉN PULSADA UNA HERRAMIENTA PARA FIJARLA ARRIBA'));
-    c.append(subtitulo('Electivos'), rejillaSeguimiento(Carpetas.ELECTIVOS));
+    if (Carpetas.ELECTIVOS.length) c.append(subtitulo('Electivos'), rejillaSeguimiento(Carpetas.ELECTIVOS));
 
     const electivos = todas.filter((r) => Carpetas.ELECTIVOS.includes(r.tipo));
     if (electivos.length) {
@@ -391,7 +391,10 @@ const App = (() => {
   function nuevoEnCarpeta(cp) {
     const { caja, cerrar } = hojaInferior('Nuevo documento', cp.nombre);
     const lista = h('div.hoja-lista');
-    for (const [titulo, mods] of [...grupos().slice(1), grupos()[0]].filter((g) => g[0] !== 'Herramientas')) {
+    for (const [titulo, mods0] of [...grupos().slice(1), grupos()[0]]) {
+      // las herramientas no se crean dentro del paciente, salvo la nutrición parenteral (SurgyDocs C la tiene en Herramientas)
+      const mods = titulo === 'Herramientas' ? mods0.filter((m) => m.id === 'NPT') : mods0;
+      if (!mods.length) continue;
       lista.append(h('div.etiqueta-suave.margen', mayus(titulo)));
       for (const m of mods) lista.append(filaFormato(m, () => { cerrar(); crearEnCarpeta(cp, m.id); }));
     }
@@ -588,7 +591,7 @@ const App = (() => {
   function formatos() {
     pantalla.append(cabecera('FORMATOS', 'EMERGENCIA, HOSPITALIZACIÓN, DOCUMENTOS Y HERRAMIENTAS'));
     const c = cuerpo();
-    for (const [titulo, mods] of grupos()) {
+    for (const [titulo, mods] of grupos().filter((g) => g[1].length)) {
       c.append(subtitulo(titulo));
       for (const m of mods) {
         const f = info(m.id);
@@ -674,6 +677,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.16.0: SurgyDocs C: sin pacientes electivos (cirugía general, urología ni ORL) y sin ninguna mención a urología ni otorrinolaringología (siempre cirugía general: se quitó el servicio de las órdenes, el egreso, la nota operatoria y la interconsulta, y las listas de materiales de esos servicios). Hidratación estándar en todos los formatos: 2000CC DE SOLUCIÓN 0.9% ENDOVENOSA A RAZÓN DE 28 GOTAS POR MINUTO. HERRAMIENTAS solo con balance hídrico, quemados, función renal, IMC y superficie, y nutrición parenteral. NUTRICIÓN PARENTERAL: sin velocidad, osmolaridad estimada ni indicación, y a hoja completa.',
       '8.15.1: SurgyDocs C: la historia de biliar ya no imprime en las órdenes el renglón fijo de hemoderivados (concentrado globular), porque ya no lleva solicitud de hemoderivados.',
       '8.15.0: EXAMEN FÍSICO: en la evolución cara, nariz, cuello y mama ya no son apartados aparte: todo está dentro del examen físico, con opciones para piel, cabeza, ojos, oídos, nariz, boca, cuello y mama, en el orden piel, cabeza, ojos, oídos, nariz, boca, cuello, mama, tórax, abdomen, extremidades y neurológico. Abdomen: forma plano, ligeramente globoso por panículo adiposo, globoso por panículo adiposo o distendido (sin excavado). HISTORIAS: nueva sección en la Parte III para describir cabeza, oídos, nariz, boca y cuello con hallazgos (herida, hematoma, otorragia, epistaxis, collarín…); pasa sola al resumen y a la nota de ingreso. La mama sale antes del tórax. SurgyDocs C: las historias terminan en las órdenes médicas (sin solicitudes de intervención, hemoderivados, interconsulta ni consentimiento). Windows 7 ya no se actualiza.',
       '8.14.1: INTERCONSULTA: los signos vitales incluyen PVC (solo si es necesario) y glicemia capilar solo en pacientes diabéticos (aparece en el formulario cuando los diagnósticos tienen DIABETES y se trae sola de la historia).',

@@ -1,6 +1,6 @@
 // 7.0: lógica de las pantallas (igual que Android): fechas, perfil, carpetas del paciente y agenda.
 
-const VERSION = '8.15.1';
+const VERSION = '8.16.0';
 
 // ------------------------------------------------------------------ fechas
 const Fecha = (() => {
@@ -224,10 +224,11 @@ const info = (id) => { const i = INFO[id]; return i ? { icono: i[0], corto: i[1]
 
 // ------------------------------------------------------------------ carpetas del paciente (Carpetas.kt)
 const Carpetas = (() => {
-  const HOSPITALIZACION = ['NOTA', 'EVOLUCION', 'PROCEDIMIENTO', 'CURVAS', 'NPT', 'EGRESO'];
-  const HERRAMIENTAS = ['BALANCE', 'LIQUIDOS', 'ESCALAS', 'ELECTROLITOS', 'RENAL', 'QUEMADOS', 'DOSIS', 'IMC', 'TROMBOSIS', 'PREOP', 'HIGADO', 'GRAVEDAD', 'TRAUMA', 'REPOSICION', 'CONVERSION', 'NUTRICION', 'HDA', 'ABDOMEN', 'LESIONES', 'HERIDAS'];
+  const HOSPITALIZACION = CORO ? ['NOTA', 'EVOLUCION', 'PROCEDIMIENTO', 'CURVAS', 'EGRESO'] : ['NOTA', 'EVOLUCION', 'PROCEDIMIENTO', 'CURVAS', 'NPT', 'EGRESO'];
+  const CORO = typeof INSTITUCION !== 'undefined' && INSTITUCION.clave === 'coro';   // SurgyDocs C
+  const HERRAMIENTAS = CORO ? ['BALANCE', 'QUEMADOS', 'RENAL', 'IMC', 'NPT'] : ['BALANCE', 'LIQUIDOS', 'ESCALAS', 'ELECTROLITOS', 'RENAL', 'QUEMADOS', 'DOSIS', 'IMC', 'TROMBOSIS', 'PREOP', 'HIGADO', 'GRAVEDAD', 'TRAUMA', 'REPOSICION', 'CONVERSION', 'NUTRICION', 'HDA', 'ABDOMEN', 'LESIONES', 'HERIDAS'];
   const DOCUMENTOS = ['RESP_IC', 'NOTA_CG', 'SOLICITUDES', 'CONSENTIMIENTO', 'INFORME', 'REFERENCIA', 'MATERIALES', 'RECIPE', 'DAMERO'];
-  const ELECTIVOS = ['ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
+  const ELECTIVOS = CORO ? [] : ['ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
   const HC = ['APENDICITIS', 'COLICO_RENAL', 'BILIAR', 'POLITRAUMA', 'OBSTRUCCION', 'VASCULAR', 'PARED', 'INFECCIONES', 'COLOPROCT', 'MAMA', 'ELECTIVO', 'ELECTIVO_URO', 'ELECTIVO_ORL'];
 
   const claveNombre = (n) => sinTildes(mayus(n || '')).replace('(COPIA)', '').replace(/[^A-Z0-9Ñ ]/g, ' ').replace(/\s+/g, ' ').trim();
