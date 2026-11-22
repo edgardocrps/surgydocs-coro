@@ -677,6 +677,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.16.4: se corrige el error Carpetas is not defined que impedía abrir la aplicación en iPhone y en Windows desde la 8.16.0 (en Android no pasaba).',
       '8.16.3: BALANCE HÍDRICO: el resultado sale en seis renglones: INGRESOS, ELIMINADOS, BALANCE HÍDRICO, VOLUMEN URINARIO, DIURESIS HORARIA (DH, en CC/HORA) y GASTO URINARIO (GU, en CC/HORA/KG), con los miles con punto.',
       '8.16.2: Los interruptores del examen físico dicen solo DESCRIBIR NARIZ, CUELLO, MAMAS, CARA y BOCA. En las órdenes de la evolución el botón CURAS ya no viene marcado por defecto.',
       '8.16.1: SurgyDocs C: la hidratación estándar dice EV (2000CC DE SOLUCIÓN 0.9% EV A RAZÓN DE 28 GOTAS POR MINUTO) en lugar de ENDOVENOSA.',
