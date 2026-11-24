@@ -677,6 +677,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.17.0: SurgyDocs C: POLITRAUMATIZADO con diagnósticos de tercer nivel (2.1.1, 2.3.1…): craneoencefálico, toracoabdominal y musculoesquelético NO COMPLICADO o COMPLICADO CON sus diagnósticos; musculoesquelético sin generalizado. BALANCE de la evolución sin agua metabólica ni pérdida insensible. Si el paciente no acepta tacto rectal, vaginal o especuloscopia, la raya de firma sale solo en la Parte III (no en el resumen ni en el comentario de ingreso). INTERCONSULTA dos por hoja sin cortes ni segunda hoja. TACTO RECTAL: en hombres dice ESPACIO RECTOVESICAL y en mujeres FONDO DE SACO (las dos apps).',
       '8.16.4: se corrige el error Carpetas is not defined que impedía abrir la aplicación en iPhone y en Windows desde la 8.16.0 (en Android no pasaba).',
       '8.16.3: BALANCE HÍDRICO: el resultado sale en seis renglones: INGRESOS, ELIMINADOS, BALANCE HÍDRICO, VOLUMEN URINARIO, DIURESIS HORARIA (DH, en CC/HORA) y GASTO URINARIO (GU, en CC/HORA/KG), con los miles con punto.',
       '8.16.2: Los interruptores del examen físico dicen solo DESCRIBIR NARIZ, CUELLO, MAMAS, CARA y BOCA. En las órdenes de la evolución el botón CURAS ya no viene marcado por defecto.',
