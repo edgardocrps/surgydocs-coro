@@ -677,6 +677,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.17.2: INTERCONSULTA dos por hoja: letra y espacios más grandes para que el texto ocupe mejor la hoja.',
       '8.17.1: INTERCONSULTA dos por hoja: ahora usa dos columnas de Word con línea de separación (original a la izquierda y copia a la derecha) en lugar de una tabla, para que el texto de la mitad izquierda no se corte en el teléfono.',
       '8.17.0: SurgyDocs C: POLITRAUMATIZADO con diagnósticos de tercer nivel (2.1.1, 2.3.1…): craneoencefálico, toracoabdominal y musculoesquelético NO COMPLICADO o COMPLICADO CON sus diagnósticos; musculoesquelético sin generalizado. BALANCE de la evolución sin agua metabólica ni pérdida insensible. Si el paciente no acepta tacto rectal, vaginal o especuloscopia, la raya de firma sale solo en la Parte III (no en el resumen ni en el comentario de ingreso). INTERCONSULTA dos por hoja sin cortes ni segunda hoja. TACTO RECTAL: en hombres dice ESPACIO RECTOVESICAL y en mujeres FONDO DE SACO (las dos apps).',
       '8.16.4: se corrige el error Carpetas is not defined que impedía abrir la aplicación en iPhone y en Windows desde la 8.16.0 (en Android no pasaba).',
