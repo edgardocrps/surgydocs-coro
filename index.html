@@ -14,6 +14,15 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="iconos/favicon.png">
   <link rel="apple-touch-icon" href="iconos/icono-180.png">
+  <script>
+    /* 8.18: modo claro / oscuro (CLARO por defecto; AUTO sigue al teléfono o al equipo). Se aplica antes de pintar para que no parpadee. */
+    (function () {
+      var t = 'CLARO'; try { t = localStorage.getItem('surgydocs_tema') || 'CLARO'; } catch (e) {}
+      var oscuro = t === 'OSCURO' || (t === 'AUTO' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.setAttribute('data-tema', t === 'OSCURO' ? 'oscuro' : t === 'AUTO' ? 'auto' : 'claro');
+      var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', '#15233B');
+    })();
+  </script>
   <link rel="stylesheet" href="app.css">
 </head>
 <body>

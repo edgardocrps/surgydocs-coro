@@ -621,6 +621,12 @@ const App = (() => {
     if (f) await importar(f);
   }
 
+  /** 8.18: modo claro / oscuro. Guarda la elección en este equipo y la aplica a toda la app. */
+  function aplicarTema() {
+    let t = 'CLARO'; try { t = localStorage.getItem('surgydocs_tema') || 'CLARO'; } catch (_) {}
+    document.documentElement.setAttribute('data-tema', t === 'OSCURO' ? 'oscuro' : t === 'AUTO' ? 'auto' : 'claro');
+  }
+
   function ajustes() {
     pantalla.append(cabecera('AJUSTES', `VERSIÓN ${VERSION} · ${esWindows ? 'WINDOWS' : 'IPHONE / WEB'}`));
     const c = cuerpo();
@@ -646,6 +652,20 @@ const App = (() => {
         const f = Preferencias.firma();
         aviso('Perfil guardado' + (f ? ': ' + f : ''));
       })));
+
+    c.append(subtitulo('Apariencia'));
+    {
+      const actual = (() => { try { return localStorage.getItem('surgydocs_tema') || 'CLARO'; } catch (_) { return 'CLARO'; } })();
+      const fila = h('div.grados.tres');
+      const pintarT = (t) => fila.querySelectorAll('button').forEach((b) => b.classList.toggle('activo', b.dataset.t === t));
+      for (const [t, rot] of [['CLARO', 'CLARO'], ['OSCURO', 'OSCURO'], ['AUTO', 'COMO EL EQUIPO']]) {
+        const b = h('button.filtro', { type: 'button', onclick: () => { try { localStorage.setItem('surgydocs_tema', t); } catch (_) {} aplicarTema(); pintarT(t); } }, rot);
+        b.dataset.t = t; fila.append(b);
+      }
+      pintarT(actual);
+      c.append(tarjeta(h('div.etiqueta', 'MODO DE PANTALLA'), fila,
+        h('p.nota', 'Claro u oscuro. "Como el equipo" sigue la configuración de su teléfono o de Windows. Los documentos de Word siempre se ven y se imprimen en blanco.')));
+    }
 
     if (Nube.disponible()) {
       c.append(subtitulo('Cuenta de Google'));

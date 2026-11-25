@@ -1,6 +1,6 @@
 // 7.0: lógica de las pantallas (igual que Android): fechas, perfil, carpetas del paciente y agenda.
 
-const VERSION = '8.17.3';
+const VERSION = '8.18.0';
 
 // ------------------------------------------------------------------ fechas
 const Fecha = (() => {
@@ -296,7 +296,7 @@ const Agenda = (() => {
   const TIPOS = ['GUARDIA', 'CONSULTA', 'SEMINARIO', 'PRESENTACIÓN', 'QUIRÓFANO', 'ACTIVIDAD'];
   const CIRUGIA = 'CIRUGÍA';
   const REPETIR = ['NO REPETIR', 'CADA SEMANA', 'CADA N DÍAS'];
-  const COLORES = { GUARDIA: '#E5484D', CONSULTA: '#1BC7CF', SEMINARIO: '#8E4EC6', 'PRESENTACIÓN': '#F5A524', 'QUIRÓFANO': '#15233B', [CIRUGIA]: '#2E9E5B' };
+  const COLORES = { GUARDIA: '#E5484D', CONSULTA: '#1BC7CF', SEMINARIO: '#8E4EC6', 'PRESENTACIÓN': '#F5A524', 'QUIRÓFANO': '#3E5F94', [CIRUGIA]: '#2E9E5B' };
   const color = (t) => COLORES[t] || '#6B7280';
   const texto = (e) => ((!e.titulo.trim() || e.titulo === e.tipo) ? e.tipo : `${e.tipo}: ${e.titulo}`) + (e.hora ? ` (${Fecha.horaBonita(e.hora)})` : '');
 
