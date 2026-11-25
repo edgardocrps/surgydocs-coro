@@ -697,6 +697,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.18.0: MODO OSCURO y MODO CLARO en toda la app: en Ajustes, Apariencia, elija Claro, Oscuro o Como el teléfono. Los documentos de Word siguen siempre en blanco.',
       '8.17.3: INTERCONSULTA dos por hoja: aún más grande, para llenar la hoja.',
       '8.17.2: INTERCONSULTA dos por hoja: letra y espacios más grandes para que el texto ocupe mejor la hoja.',
       '8.17.1: INTERCONSULTA dos por hoja: ahora usa dos columnas de Word con línea de separación (original a la izquierda y copia a la derecha) en lugar de una tabla, para que el texto de la mitad izquierda no se corte en el teléfono.',
