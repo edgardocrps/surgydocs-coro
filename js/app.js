@@ -697,6 +697,7 @@ const App = (() => {
 
     c.append(subtitulo('Novedades de la versión'));
     c.append(tarjeta(...[
+      '8.18.2: se corrige el cierre al abrir la app en Android causado por un error en los colores del modo claro (8.18.0 y 8.18.1).',
       '8.18.0: MODO OSCURO y MODO CLARO en toda la app: en Ajustes, Apariencia, elija Claro, Oscuro o Como el teléfono. Los documentos de Word siguen siempre en blanco.',
       '8.17.3: INTERCONSULTA dos por hoja: aún más grande, para llenar la hoja.',
       '8.17.2: INTERCONSULTA dos por hoja: letra y espacios más grandes para que el texto ocupe mejor la hoja.',
